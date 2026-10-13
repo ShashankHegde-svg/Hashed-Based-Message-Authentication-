@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HMAC-SHA256 Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">Home</a>
+  <a href="/sender">Sender</a>
+  <a href="/receiver">Receiver</a>
+  <a href="/lab" aria-current="page">Lab</a>
+</nav>
+
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1>HMAC-SHA256 Lab</h1>
+    <p class="standfirst">
+      A message authentication code proves two things at once: that a message came from
+      someone holding the secret key, and that nobody altered it on the way. Type a message
+      below, seal it, then try changing one character and watch the seal break.
+    </p>
+    <p class="formula">HMAC(K, m) = H( (K′ ⊕ opad) ‖ H( (K′ ⊕ ipad) ‖ m ) )</p>
+  </div>
+</header>
+
+<main class="workbench">
+
+  <section class="controls" aria-label="Inputs">
+    <div class="tabs" role="tablist">
+      <button class="tab is-active" role="tab" aria-selected="true" data-mode="generate">Generate a MAC</button>
+      <button class="tab" role="tab" aria-selected="false" data-mode="verify">Verify a MAC</button>
+    </div>
+
+    <div class="field">
+      <label for="key">Secret key</label>
+      <div class="field-row">
+        <input id="key" type="text" spellcheck="false" autocomplete="off"
+               placeholder="shared-secret-between-sender-and-receiver">
+        <button id="randomKey" class="ghost" type="button">Generate random key</button>
+      </div>
+      <div class="encoding" role="radiogroup" aria-label="Key encoding">
+        <label><input type="radio" name="keyEncoding" value="text" checked> Text</label>
+        <label><input type="radio" name="keyEncoding" value="hex"> Hex</label>
+      </div>
+    </div>
+
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" rows="6" spellcheck="false"
+                placeholder="Transfer 5000 to account 12345"></textarea>
+      <div class="encoding" role="radiogroup" aria-label="Message encoding">
+        <label><input type="radio" name="messageEncoding" value="text" checked> Text</label>
+        <label><input type="radio" name="messageEncoding" value="hex"> Hex</label>
+      </div>
+    </div>
+
+    <div class="field" id="macField" hidden>
+      <label for="mac">MAC to check</label>
+      <textarea id="mac" rows="2" spellcheck="false"
+                placeholder="64 hex characters received alongside the message"></textarea>
+    </div>
+
+    <button id="run" class="primary" type="button">Seal the message</button>
+    <p id="error" class="error" role="alert" hidden></p>
+  </section>
+
+  <section class="output" aria-label="Result" aria-live="polite">
+
+    <div id="emptyState" class="empty">
+      <p>No MAC yet. Enter a key and a message, then seal it.</p>
+    </div>
+
+    <div id="macPanel" class="panel" hidden>
+      <div class="panel-head">
+        <h2 id="macHeading">Message authentication code</h2>
+        <button id="copyMac" class="ghost" type="button">Copy</button>
+      </div>
+      <output id="macValue" class="digest"></output>
+      <p id="macMeta" class="meta"></p>
+    </div>
+
+    <div id="verdict" class="verdict" hidden>
+      <span class="verdict-mark" aria-hidden="true"></span>
+      <div>
+        <h2 id="verdictTitle"></h2>
+        <p id="verdictReason"></p>
+        <dl id="verdictDetail" class="compare"></dl>
+      </div>
+    </div>
+
+    <div id="tracePanel" class="panel" hidden>
+      <div class="panel-head">
+        <h2>Inside the construction</h2>
+        <button id="toggleTrace" class="ghost" type="button" aria-expanded="true">Hide</button>
+      </div>
+      <ol id="traceList" class="trace"></ol>
+    </div>
+
+  </section>
+</main>
+
+<footer class="colophon">
+  <p>
+    The HMAC construction here is written out from RFC 2104 rather than called from a
+    library; SHA-256 itself is the only borrowed primitive. Run <code>python test_hmac.py</code>
+    to check the output against the RFC 4231 test vectors.
+  </p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

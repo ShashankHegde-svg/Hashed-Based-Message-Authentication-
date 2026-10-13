@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>HMAC-SHA256 Lab — Sender and Receiver</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <h1>HMAC-SHA256 Lab</h1>
+    <p class="standfirst">
+      Two people, one shared secret, and an email that anyone could tamper with.
+      The sender seals a message with HMAC and emails it. The receiver checks the
+      seal. Open this site on two devices, pick a role on each, and watch
+      tampering get caught.
+    </p>
+  </div>
+</header>
+
+<main class="narrow">
+
+  <section class="role-grid" aria-label="Choose a role">
+    <a class="role-card" href="/sender">
+      <span class="role-tag">Role 1</span>
+      <h2>I am the Sender</h2>
+      <p>Type a message, seal it with the shared secret key, and email it to the receiver.</p>
+      <span class="role-go">Open sender page</span>
+    </a>
+
+    <a class="role-card" href="/receiver">
+      <span class="role-tag">Role 2</span>
+      <h2>I am the Receiver</h2>
+      <p>Paste the email you received, enter the shared key, and find out whether it is authentic.</p>
+      <span class="role-go">Open receiver page</span>
+    </a>
+  </section>
+
+  <section class="panel">
+    <h2 class="plain-h">How the demo flows</h2>
+    <ol class="flow">
+      <li><strong>Agree on a key first.</strong> The sender and receiver share a secret key through a channel that is not the email: say it aloud, or send it in a chat app.</li>
+      <li><strong>Sender seals and emails.</strong> The email carries the message and its MAC, never the key.</li>
+      <li><strong>Receiver pastes the email</strong> into the receiver page and enters the key.</li>
+      <li><strong>Verification.</strong> Untouched, it reads <em>Authentic</em>. Edit one character of the message before verifying, as an attacker in the middle would, and it reads <em>Not authentic</em>.</li>
+    </ol>
+  </section>
+
+  <p class="aside-link">
+    Want to see the algorithm itself, step by step?
+    <a href="/lab">Open the HMAC construction lab</a>.
+  </p>
+
+</main>
+
+</body>
+</html>

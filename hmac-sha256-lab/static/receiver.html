@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Receiver — HMAC-SHA256 Lab</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">Home</a>
+  <a href="/sender">Sender</a>
+  <a href="/receiver" aria-current="page">Receiver</a>
+  <a href="/lab">Lab</a>
+</nav>
+
+<header class="masthead compact">
+  <div class="masthead-inner">
+    <h1>Receiver</h1>
+    <p class="standfirst">
+      Open the email you received, paste it below, and enter the shared secret key the
+      sender gave you separately. The page recomputes the MAC and compares.
+    </p>
+  </div>
+</header>
+
+<main class="narrow">
+
+  <section class="controls" aria-label="Verify">
+
+    <div class="field">
+      <label for="key">Shared secret key</label>
+      <input id="key" type="text" spellcheck="false" autocomplete="off"
+             placeholder="the key the sender told you">
+    </div>
+
+    <div class="field">
+      <label for="pasted">Paste the whole email here</label>
+      <textarea id="pasted" rows="6" spellcheck="false"
+                placeholder="Paste the email body, then press Extract"></textarea>
+      <button id="extract" class="ghost block" type="button">Extract message and MAC</button>
+    </div>
+
+    <div class="field">
+      <label for="message">Message <span class="soft">(editable: change a character to play the attacker)</span></label>
+      <textarea id="message" rows="4" spellcheck="false"></textarea>
+    </div>
+
+    <div class="field">
+      <label for="mac">MAC</label>
+      <textarea id="mac" rows="2" spellcheck="false"
+                placeholder="64 hex characters"></textarea>
+    </div>
+
+    <button id="verify" class="primary" type="button">Verify</button>
+    <p id="error" class="error" role="alert" hidden></p>
+  </section>
+
+  <section class="output" aria-live="polite">
+    <div id="verdict" class="verdict" hidden>
+      <span class="verdict-mark" aria-hidden="true"></span>
+      <div>
+        <h2 id="verdictTitle"></h2>
+        <p id="verdictReason"></p>
+        <dl id="verdictDetail" class="compare"></dl>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<script src="receiver.js"></script>
+</body>
+</html>

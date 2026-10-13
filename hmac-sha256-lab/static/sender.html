@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sender — HMAC-SHA256 Lab</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<nav class="topnav">
+  <a href="/">Home</a>
+  <a href="/sender" aria-current="page">Sender</a>
+  <a href="/receiver">Receiver</a>
+  <a href="/lab">Lab</a>
+</nav>
+
+<header class="masthead compact">
+  <div class="masthead-inner">
+    <h1>Sender</h1>
+    <p class="standfirst">
+      Seal a message with the shared secret key, then email it. The email carries the
+      message and its MAC. The key is never included.
+    </p>
+  </div>
+</header>
+
+<main class="narrow">
+
+  <section class="controls" aria-label="Compose">
+
+    <div class="field">
+      <label for="receiverEmail">Receiver's email address</label>
+      <input id="receiverEmail" type="email" inputmode="email" autocomplete="off"
+             spellcheck="false" placeholder="receiver@example.com">
+    </div>
+
+    <div class="field">
+      <label for="key">Shared secret key</label>
+      <div class="field-row">
+        <input id="key" type="text" spellcheck="false" autocomplete="off"
+               placeholder="agreed with the receiver beforehand">
+        <button id="randomKey" class="ghost" type="button">Random key</button>
+      </div>
+      <p class="hint">
+        Tell the receiver this key through a different channel, such as aloud or in a chat.
+        Never put it in the email.
+      </p>
+    </div>
+
+    <div class="field">
+      <label for="message">Message</label>
+      <textarea id="message" rows="5" spellcheck="false"
+                placeholder="Transfer 5000 to account 12345"></textarea>
+    </div>
+
+    <button id="send" class="primary" type="button">Seal and send email</button>
+    <p id="error" class="error" role="alert" hidden></p>
+  </section>
+
+  <section class="output" aria-live="polite">
+
+    <div id="sentPanel" class="verdict is-valid" hidden>
+      <span class="verdict-mark" aria-hidden="true"></span>
+      <div>
+        <h2>Email sent</h2>
+        <p id="sentDetail"></p>
+      </div>
+    </div>
+
+    <div id="macPanel" class="panel" hidden>
+      <div class="panel-head">
+        <h2>The MAC that was sent</h2>
+        <button id="copyMac" class="ghost" type="button">Copy</button>
+      </div>
+      <output id="macValue" class="digest"></output>
+      <p class="meta">256 bits as 64 hex characters. The receiver needs the key separately to check it.</p>
+    </div>
+
+    <div id="tracePanel" class="panel" hidden>
+      <div class="panel-head">
+        <h2>Inside the construction</h2>
+        <button id="toggleTrace" class="ghost" type="button" aria-expanded="true">Hide</button>
+      </div>
+      <ol id="traceList" class="trace"></ol>
+    </div>
+
+  </section>
+</main>
+
+<script src="sender.js"></script>
+</body>
+</html>
